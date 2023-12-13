@@ -1,0 +1,186 @@
+[gd_scene load_steps=19 format=3 uid="uid://bs44pl0iyejmo"]
+
+[ext_resource type="Script" path="res://objects/player/player.gd" id="1_muabi"]
+[ext_resource type="PackedScene" uid="uid://ckcwhrc1k3tyc" path="res://objects/player/character.tscn" id="2_kwddj"]
+[ext_resource type="Script" path="res://objects/player/camera.gd" id="2_pr00y"]
+[ext_resource type="PackedScene" uid="uid://b7v4omodhrdtf" path="res://objects/player/top_ui.tscn" id="4_w4b51"]
+[ext_resource type="AudioStream" uid="uid://dcss5u3rbi2pd" path="res://assets/audio/phaseJump4.ogg" id="5_u6xe4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_00jqn"]
+radius = 0.15
+height = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_236il"]
+radius = 0.6
+
+[sub_resource type="Animation" id="Animation_ybdpv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("character:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("character:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f1xrq"]
+resource_name = "walk1"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("character:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.1, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("character:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.0872665), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wnw2m"]
+resource_name = "walk2"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("character:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.1, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("character:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, -0.0872665), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_511ps"]
+_data = {
+"RESET": SubResource("Animation_ybdpv"),
+"walk1": SubResource("Animation_f1xrq"),
+"walk2": SubResource("Animation_wnw2m")
+}
+
+[sub_resource type="Curve" id="Curve_8gne2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.079602, 0.835165), 1.41501, 1.41501, 0, 0, Vector2(0.691542, 1), 0.140987, 0.140987, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_40a3n"]
+curve = SubResource("Curve_8gne2")
+
+[sub_resource type="Curve" id="Curve_6g4pf"]
+_data = [Vector2(0.189055, 0.010989), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_3hg0w"]
+curve_y = SubResource("Curve_6g4pf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x5hjb"]
+emission_shape = 1
+emission_sphere_radius = 0.15
+directional_velocity_min = 1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_3hg0w")
+gravity = Vector3(0, 0, 0)
+attractor_interaction_enabled = false
+alpha_curve = SubResource("CurveTexture_40a3n")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4yddu"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_6u6wt"]
+material = SubResource("StandardMaterial3D_4yddu")
+radius = 0.05
+height = 0.1
+radial_segments = 16
+rings = 8
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_muabi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+shape = SubResource("CapsuleShape3D_00jqn")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 2, 1)
+current = true
+fov = 80.0
+script = ExtResource("2_pr00y")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_236il")
+
+[node name="character" parent="." instance=ExtResource("2_kwddj")]
+transform = Transform3D(0.11, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_511ps")
+}
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.070348, 0)
+emitting = false
+amount = 64
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_x5hjb")
+draw_pass_1 = SubResource("SphereMesh_6u6wt")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("4_w4b51")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_u6xe4")
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

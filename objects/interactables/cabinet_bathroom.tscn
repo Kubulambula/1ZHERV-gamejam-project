@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://u4m1xfkb62iv"]
+
+[ext_resource type="PackedScene" uid="uid://bb2l5qen3kuvb" path="res://assets/kenney_interior/bathroomCabinetDrawer.glb" id="1_gqkaa"]
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="2_o8jig"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hjmqc"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="Animation" id="Animation_aqa0q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("bathroomCabinetDrawer(Clone)/drawerBottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0268442, 0.085086, -0.15)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bathroomCabinetDrawer(Clone)/drawerTop:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0268442, 0.237543, -0.15)]
+}
+
+[sub_resource type="Animation" id="Animation_1haf3"]
+resource_name = "interact"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("bathroomCabinetDrawer(Clone)/drawerBottom:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.0268442, 0.085086, -0.15), Vector3(0.0268442, 0.085086, 0.0756865)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("bathroomCabinetDrawer(Clone)/drawerTop:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.0268442, 0.237543, -0.15), Vector3(0.0268442, 0.237543, -0.00691363)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iccq0"]
+_data = {
+"RESET": SubResource("Animation_aqa0q"),
+"interact": SubResource("Animation_1haf3")
+}
+
+[node name="bathroomCabinetDrawer" instance=ExtResource("1_gqkaa")]
+
+[node name="drawerBottom" parent="bathroomCabinetDrawer(Clone)" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0268442, 0.085086, -0.15)
+
+[node name="drawerTop" parent="bathroomCabinetDrawer(Clone)" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0268442, 0.237543, -0.15)
+
+[node name="Area3D" type="Area3D" parent="." index="1" node_paths=PackedStringArray("_animation_player", "_notification_label")]
+script = ExtResource("2_o8jig")
+category = "bathroom"
+_animation_player = NodePath("../AnimationPlayer")
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.21574, 0.19175, -0.328988)
+shape = SubResource("BoxShape3D_hjmqc")
+
+[node name="Label3D" type="Label3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.219276, 0.743078, -0.295132)
+text = "Umyvadlo"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_iccq0")
+}
+
+[node name="Node3D" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.147411)

@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjmxq3xuxrhel"]
+
+[ext_resource type="PackedScene" uid="uid://c3c8ac8xoe4oh" path="res://assets/kenney_interior/kitchenCabinet.glb" id="1_h0jga"]
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="2_sfnje"]
+
+[sub_resource type="Animation" id="Animation_v8pny"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("kitchenCabinet(Clone)/door:quaternion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dljel"]
+resource_name = "interact"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("kitchenCabinet(Clone)/door:quaternion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, -0.573576, 0, 0.819152)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ilppp"]
+_data = {
+"RESET": SubResource("Animation_v8pny"),
+"interact": SubResource("Animation_dljel")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hpvq5"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[node name="kitchenCabinet" instance=ExtResource("1_h0jga")]
+
+[node name="door" parent="kitchenCabinet(Clone)" index="0"]
+rotation_edit_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_ilppp")
+}
+autoplay = "RESET"
+
+[node name="Area3D" type="Area3D" parent="." index="2" node_paths=PackedStringArray("_animation_player", "_notification_label")]
+script = ExtResource("2_sfnje")
+category = "kitchen"
+_animation_player = NodePath("../AnimationPlayer")
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.218634, 0.17096, -0.213362)
+shape = SubResource("BoxShape3D_hpvq5")
+
+[node name="Label3D" type="Label3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.202841, 0.644493, -0.227805)
+pixel_size = 0.01
+text = "Skříňka"
+
+[node name="Node3D" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.227037, 0, 0.345705)

@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=3 uid="uid://doi2ulinxlx1d"]
+
+[ext_resource type="PackedScene" uid="uid://flehxb4giaba" path="res://assets/kenney_interior/kitchenCabinetDrawer.glb" id="1_efj2i"]
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="2_5yukh"]
+
+[sub_resource type="Animation" id="Animation_f1l4o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../kitchenCabinetDrawer(Clone)/drawer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.0268442, 0.277543, -0.02)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../kitchenCabinetDrawer(Clone)/door:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cf5cg"]
+resource_name = "interact"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../kitchenCabinetDrawer(Clone)/drawer:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.0268442, 0.277543, -0.02), Vector3(0.0268442, 0.277543, 0.115853)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../kitchenCabinetDrawer(Clone)/door:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, -0.573576, 0, 0.819152)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fs8nx"]
+_data = {
+"RESET": SubResource("Animation_f1l4o"),
+"interact": SubResource("Animation_cf5cg")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wqgwo"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[node name="kitchenCabinetDrawer" instance=ExtResource("1_efj2i")]
+
+[node name="door" parent="kitchenCabinetDrawer(Clone)" index="0"]
+rotation_edit_mode = 1
+
+[node name="drawer" parent="kitchenCabinetDrawer(Clone)" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0268442, 0.277543, -0.02)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+root_node = NodePath("../Area3D/CollisionShape3D")
+libraries = {
+"": SubResource("AnimationLibrary_fs8nx")
+}
+autoplay = "RESET"
+
+[node name="Label3D" type="Label3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.227348, 0.587471, -0.239778)
+pixel_size = 0.01
+text = "Skříňka"
+
+[node name="Area3D" type="Area3D" parent="." index="3" node_paths=PackedStringArray("_animation_player", "_notification_label")]
+script = ExtResource("2_5yukh")
+category = "kitchen"
+_animation_player = NodePath("../AnimationPlayer")
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.223632, 0.245837, -0.166403)
+shape = SubResource("BoxShape3D_wqgwo")
+
+[node name="Node3D" type="Node3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.211124, 0, 0.24508)

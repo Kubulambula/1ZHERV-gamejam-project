@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://bl0y53wjgcogd"]
+
+[ext_resource type="PackedScene" uid="uid://cakboqp3nb3q8" path="res://assets/kenney_interior/bookcaseClosedDoors.glb" id="1_3f01w"]
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="2_i0mj3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iidjp"]
+size = Vector3(0.4, 0.4, 0.2)
+
+[sub_resource type="Animation" id="Animation_45k26"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../bookcaseClosedDoors(Clone)/doorRight:quaternion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../bookcaseClosedDoors(Clone)/doorLeft:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_l18oe"]
+resource_name = "interact"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../bookcaseClosedDoors(Clone)/doorLeft:quaternion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, -0.573576, 0, 0.819152)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../bookcaseClosedDoors(Clone)/doorRight:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, 0.422618, 0, 0.906308)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ouv7"]
+_data = {
+"RESET": SubResource("Animation_45k26"),
+"interact": SubResource("Animation_l18oe")
+}
+
+[node name="bookcaseClosedDoors" instance=ExtResource("1_3f01w")]
+
+[node name="doorRight" parent="bookcaseClosedDoors(Clone)" index="1"]
+rotation_edit_mode = 1
+
+[node name="Area3D" type="Area3D" parent="." index="1" node_paths=PackedStringArray("_animation_player", "_notification_label")]
+script = ExtResource("2_i0mj3")
+category = "bedroom"
+_animation_player = NodePath("../AnimationPlayer")
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.210192, 0.212753, -0.0908459)
+shape = SubResource("BoxShape3D_iidjp")
+
+[node name="Label3D" type="Label3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.199418, 0.914262, -0.143375)
+text = "Skříň"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+root_node = NodePath("../Label3D")
+libraries = {
+"": SubResource("AnimationLibrary_8ouv7")
+}
+autoplay = "RESET"

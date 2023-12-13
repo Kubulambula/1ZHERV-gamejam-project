@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4y040lgvtd03"]
+
+[ext_resource type="PackedScene" uid="uid://b4kbj5gucpsa2" path="res://assets/kenney_interior/bookcaseClosedWide.glb" id="1_3ih4o"]
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="2_phlne"]
+[ext_resource type="PackedScene" uid="uid://bdpe8g5jkw881" path="res://assets/kenney_interior/books.glb" id="3_jmeok"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8krcf"]
+size = Vector3(0.6, 0.4, 0.2)
+
+[node name="bookcaseClosedWide" instance=ExtResource("1_3ih4o")]
+
+[node name="Area3D" type="Area3D" parent="." index="1" node_paths=PackedStringArray("_notification_label")]
+script = ExtResource("2_phlne")
+category = "bookcase"
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.392274, 0.182303, -0.169372)
+shape = SubResource("BoxShape3D_8krcf")
+
+[node name="Label3D" type="Label3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.421601, 0.949947, -0.0917241)
+text = "Knihovna"
+
+[node name="books" parent="." index="3" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.590105, 0.360868, 1.19209e-07)
+
+[node name="books2" parent="." index="4" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.434757, 0.360868, 1.19209e-07)
+
+[node name="books3" parent="." index="5" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12931, 0.360868, 1.19209e-07)
+
+[node name="books4" parent="." index="6" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.246748, 0.138976, 1.19209e-07)
+
+[node name="books5" parent="." index="7" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.400442, 0.138976, 1.19209e-07)
+
+[node name="books6" parent="." index="8" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.610156, 0.138976, 1.19209e-07)
+
+[node name="books7" parent="." index="9" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.592062, 0.581017, 1.19209e-07)
+
+[node name="books8" parent="." index="10" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.296754, 0.581017, 1.19209e-07)
+
+[node name="books9" parent="." index="11" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130095, 0.581017, 1.19209e-07)
+
+[node name="books10" parent="." index="12" instance=ExtResource("3_jmeok")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.459167, 0.581017, 1.19209e-07)

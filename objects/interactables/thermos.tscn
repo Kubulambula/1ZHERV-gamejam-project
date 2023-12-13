@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://7v0mas8e4yf4"]
+
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="1_g0pfg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ght1e"]
+albedo_color = Color(0.368627, 0.117647, 0.780392, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_p37c4"]
+material = SubResource("StandardMaterial3D_ght1e")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.2
+radial_segments = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfdi1"]
+albedo_color = Color(0.537255, 0.537255, 0.537255, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ebyvm"]
+material = SubResource("StandardMaterial3D_wfdi1")
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.01
+radial_segments = 6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_18rmh"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[node name="Thermos" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_p37c4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.108006, 0)
+mesh = SubResource("CylinderMesh_ebyvm")
+
+[node name="Area3D" type="Area3D" parent="." node_paths=PackedStringArray("_notification_label")]
+script = ExtResource("1_g0pfg")
+category = "thermos"
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_18rmh")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.303218, 0)
+text = "Termoska"

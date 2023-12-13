@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://bempwl505y0nj"]
+
+[ext_resource type="PackedScene" uid="uid://bwavo6r2tt6wi" path="res://assets/kenney_interior/kitchenFridge.glb" id="1_sk6aj"]
+[ext_resource type="Script" path="res://objects/interactables/interactable.gd" id="2_cdfse"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ol3d"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="Animation" id="Animation_45tuw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("kitchenFridge(Clone)/doorFreezer:quaternion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("kitchenFridge(Clone)/doorFridge:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_4hqlt"]
+resource_name = "interact"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("kitchenFridge(Clone)/doorFreezer:quaternion")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, 0, 0, 1), Quaternion(0, -0.5, 0, 0.866025)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("kitchenFridge(Clone)/doorFridge:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Quaternion(0, 0, 0, 1), Quaternion(0, -0.573576, 0, 0.819152)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_32jof"]
+_data = {
+"RESET": SubResource("Animation_45tuw"),
+"interact": SubResource("Animation_4hqlt")
+}
+
+[node name="kitchenFridge" instance=ExtResource("1_sk6aj")]
+
+[node name="doorFreezer" parent="kitchenFridge(Clone)" index="0"]
+rotation_edit_mode = 1
+
+[node name="doorFridge" parent="kitchenFridge(Clone)" index="1"]
+rotation_edit_mode = 1
+
+[node name="Area3D" type="Area3D" parent="." index="1" node_paths=PackedStringArray("_animation_player", "_notification_label")]
+script = ExtResource("2_cdfse")
+category = "kitchen"
+_animation_player = NodePath("../AnimationPlayer")
+_notification_label = NodePath("../Label3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.230591, 0.204518, -0.0576423)
+shape = SubResource("BoxShape3D_2ol3d")
+
+[node name="Label3D" type="Label3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.222838, 1.13778, -0.0857989)
+text = "Lednice"
+
+[node name="Node3D" type="Node3D" parent="." index="3"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+libraries = {
+"": SubResource("AnimationLibrary_32jof")
+}
+autoplay = "RESET"

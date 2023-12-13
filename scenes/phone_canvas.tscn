@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://il10ah5nsr7c"]
+
+[ext_resource type="Texture2D" uid="uid://b6f6c5doqvkn" path="res://assets/phone_textbox.png" id="1_kp04h"]
+[ext_resource type="Script" path="res://scenes/phone_canvas.gd" id="1_vmob5"]
+[ext_resource type="FontFile" uid="uid://ci5w6525sues6" path="res://assets/fonts/COMIC.TTF" id="2_yi3yl"]
+
+[sub_resource type="Animation" id="Animation_uheyg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Phone:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1596, 582)]
+}
+
+[sub_resource type="Animation" id="Animation_s6gip"]
+resource_name = "swipe"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Phone:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1596, 582), Vector2(316, 582)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pjr5s"]
+_data = {
+"RESET": SubResource("Animation_uheyg"),
+"swipe": SubResource("Animation_s6gip")
+}
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_vmob5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pjr5s")
+}
+autoplay = "RESET"
+
+[node name="Phone" type="TextureRect" parent="."]
+offset_left = 1596.0
+offset_top = 582.0
+offset_right = 2892.0
+offset_bottom = 900.0
+texture = ExtResource("1_kp04h")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Phone"]
+layout_mode = 0
+offset_left = 143.0
+offset_top = 121.0
+offset_right = 969.0
+offset_bottom = 231.0
+theme_override_fonts/normal_font = ExtResource("2_yi3yl")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "Sample text"
+scroll_following = true
